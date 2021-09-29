@@ -1,37 +1,49 @@
-const express = require('express');
-//express ek function defination pass krta h which we have to call in app
-const  app = express();
+const express = require("express");
+const app = express();
+const port = 5000;
 
-const PORT  = 5000 ;
+//400 client side error
+//500 server side error
 
-// app.use('/' , "A")
-app.get("/", (req, res) => {
-  res.send("Hello world");
+app.use("/", (req, res) => {
+  //   res.send("HELLO");
+  //   res.send([11,22,33])
+  // res.sendStatus(500);
+  // res.send()
+  //pipeling
+  res.status(200).send("YOO");
 });
 
 //to send data as json
 app.get("/json", (req, res) => {
-  res.json({
-    name: "John",
-    age: "69",
-  });
+  res.json({ name: "John", age: "69" });
 });
 
-//receving query parameter
-app.get("/something", (req, res) => {
-  res.status(200).send("You should get a 200 OK");
+// acd aur abcd pe same chale i.e keep b as optional
+app.get("/ab?cd", (req, res) => {
+  res.send("abcd");
 });
 
+//bkitni baarr bhi a skta then ab+++
+///ab*cd -> cd last m aaye
+//ab(cd)?e
+//  /a/ -> regex
+
+//receiving query paramater
+app.get("/query", (req, res) => {
+  console.log(req.query);
+  res.status(200).send(req.query);
+});
 
 //params
-app.get('/team/:code', (req, res) => {
-	const { code } = req.params;
-	if (code == 1) {
-		res.send('Welcome to Async Team');
-		return;
-	}
+app.get("/team/:code", (req, res) => {
+  const { code } = req.params;
+  if (code == 1) {
+    res.send("Welcome to Async Team");
+    return;
+  }
 
-	res.send('Incorrect PARAM CODE!');
+  res.send("Incorrect PARAM CODE!");
 });
 
 app.get("/query", (req, res) => {
@@ -39,5 +51,4 @@ app.get("/query", (req, res) => {
   res.status(200).send(req.query);
 });
 
-
-app.listen(PORT, console.log(`Server is running on ${PORT}`));
+app.listen(port, console.log(`Server is runing on port ${port}`));
